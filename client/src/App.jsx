@@ -3,7 +3,7 @@ import { io } from "socket.io-client";
 import { Box, Button, Container, Stack, TextField, Typography } from "@mui/material";
 
 const App = () => {
-  const socket = useMemo(() => io("http://localhost:3000", { withCredentials: true }), []);
+  const socket = useMemo(() => io("https://chat-app-server-ks9m.onrender.com", { withCredentials: true }), []);
 
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState("");
