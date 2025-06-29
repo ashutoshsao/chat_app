@@ -4,7 +4,7 @@ This repository contains a real-time chat application built with a Node.js + Soc
 
 ## Tech Stack
 
-- Backend: Node.js, Express, Socket.IO, JWT, CORS
+- Server: Node.js, Express, Socket.IO, JWT, CORS
 - Frontend: React.js, Material UI, Socket.IO Client
 
 ---
@@ -13,9 +13,9 @@ This repository contains a real-time chat application built with a Node.js + Soc
 
 ```bash
 .
-├── backend/              # Node.js + Socket.IO server
+├── server/              # Node.js + Socket.IO server
 │   └── app.js
-└── frontend/             # React client app
+└── client/             # React client app
     └── App.jsx
 ```
 
@@ -42,12 +42,32 @@ This repository contains a real-time chat application built with a Node.js + Soc
 
 ---
 
+## Environment Variables
+
+To run the server, create a `.env` file in the `server` directory with the following variables:
+
+```
+SECRET_KEY_JWT=your_secret_key_for_jwt
+PORT=3000 # Only needed for local development, Render provides its own PORT
+CORS_ORIGIN=http://localhost:5173 # This should be the URL of your client application during local development (e.g., React dev server)
+```
+
+### Client
+
+To run the client, create a `.env` file in the `client` directory with the following variables:
+
+```
+VITE_SERVER_URL=http://localhost:3000
+```
+
+---
+
 ## Getting Started
 
-### Backend
+### Server
 
 ```bash
-cd backend
+cd server
 npm install
 node app.js
 ```
@@ -57,15 +77,15 @@ node app.js
   - `/`: Health check — returns "Backend is up !!!"
   - `/login`: Issues dummy JWT and sets cookie
 
-### Frontend
+### Client
 
 ```bash
-cd frontend
+cd client
 npm install
 npm start
 ```
 
-- Connects to backend via https://chat-app-server-ks9m.onrender.com
+- Connects to backend via `VITE_SERVER_URL`. If running the server locally, ensure `VITE_SERVER_URL` in `client/.env` is set to `http://localhost:3000`.
 - Message state, socket events, and UI handled via React + Material UI
 
 ---
@@ -96,7 +116,7 @@ npm start
 
 ## Dependencies
 
-### Backend
+### Server
 
 - express
 - socket.io
@@ -104,7 +124,7 @@ npm start
 - cookie-parser
 - jsonwebtoken
 
-### Frontend
+### Client
 
 - react
 - @mui/material
