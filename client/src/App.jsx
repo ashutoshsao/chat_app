@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import { useEffect, useState, useMemo } from 'react';
 import { io } from "socket.io-client";
 import { Box, Button, Container, Stack, TextField, Typography } from "@mui/material";
 
@@ -42,7 +42,7 @@ const App = () => {
     return () => {
       socket.disconnect();
     };
-  }, []);
+  }, [socket]);
 
   return (
     <Container maxWidth="sm">

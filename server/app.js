@@ -5,9 +5,15 @@ import cors from "cors";
 import jwt from 'jsonwebtoken';
 import cookieParser from "cookie-parser";
 
-const secretKeyJWT = "asdasdasdasdasdawf"
+import dotenv from "dotenv";
+dotenv.config({
+    path: "./.env",
+});
 
-const port = 3000;
+const secretKeyJWT = process.env.SECRET_KEY_JWT;
+
+const port = process.env.PORT || 3000;
+const corsOrigin = process.env.CORS_ORIGIN || "https://chat-app-client-f43b.onrender.com";
 
 const app = express();
 
@@ -15,7 +21,7 @@ const server = createServer(app);
 
 const io = new Server(server,{
     cors:{
-        origin:"https://chat-app-client-f43b.onrender.com",
+        origin:corsOrigin,
         methods:["GET","POST"],
         credentials:true,
     },
@@ -23,7 +29,7 @@ const io = new Server(server,{
 
 app.use(
     cors({
-        origin:"https://chat-app-client-f43b.onrender.com",
+        origin:corsOrigin,
         methods:["GET","POST"],
         credentials:true,
     }));
@@ -33,6 +39,7 @@ app.get('/',(req,res)=>{
 });
 
 app.get('/login',(req,res)=>{
+    // TODO: Replace hardcoded _id with a dynamic user ID from a database
     const token = jwt.sign({_id:"asdasjasdjas"},secretKeyJWT )
 
     res.cookie("token",token,{httpOnly: true,secure:true,sameSite:"none"})
@@ -45,6 +52,8 @@ io.on("connection", (socket) => {
     console.log("User Connected", socket.id);
   
     socket.on("message", ({ room, message }) => {
+      // TODO: Implement input validation for 'room' and 'message'
+      // TODO: Implement proper user authentication and authorization
       const time = new Date().toLocaleTimeString();
       const messageData = {
         message,
